@@ -1,12 +1,13 @@
+import TypesView from './types-view';
+import CitiesView from './cities-view';
+import OffersView from './offers-view';
+import DestinationsView from './destinations-view';
 import { pointTypes } from '../mock/point-types';
 import { pointCities } from '../mock/point-cities';
-import { createTypesTemplate } from './types-view';
-import { createCitiesTemplate } from './cities-view';
-import { createOffersTemplate } from './offers-view';
-import { createDestinationsTemplate } from './destinations-view';
 import dayjs from 'dayjs';
+import { createElement } from '../render.js';
 
-export const createAddNewPointTemplate = (point = {}) => {
+const createAddNewPointTemplate = (point = {}) => {
   const {
     city = '',
     dateFrom = '',
@@ -28,7 +29,7 @@ export const createAddNewPointTemplate = (point = {}) => {
         <div class="event__type-list">
           <fieldset class="event__type-group">
             <legend class="visually-hidden">Event type</legend>
-            ${createTypesTemplate(pointTypes)}
+            ${TypesView.getTypesTemplate(pointTypes)}
           </fieldset>
         </div>
       </div>
@@ -39,7 +40,7 @@ export const createAddNewPointTemplate = (point = {}) => {
         </label>
         <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
         <datalist id="destination-list-1">
-          ${createCitiesTemplate(pointCities)}
+        ${CitiesView.getCitiesTemplate(pointCities)}
         </datalist>
       </div>
 
@@ -63,8 +64,33 @@ export const createAddNewPointTemplate = (point = {}) => {
       <button class="event__reset-btn" type="reset">Cancel</button>
     </header>
     <section class="event__details">
-        ${createOffersTemplate(offers)}
-        ${createDestinationsTemplate(destination)}
+    ${OffersView.getOffersTemplate(offers)}
+    ${DestinationsView.getDestinationsTemplate(destination)}
     </section>
   </form>`;
 };
+
+export default class AddNewPointView {
+  #element = null;
+  #point = null;
+
+  constructor(point) {
+    this.#point = point;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+
+    return this.#element;
+  }
+
+  get template() {
+    return createAddNewPointTemplate(this.#point);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
