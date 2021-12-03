@@ -5,7 +5,7 @@ import SortView from '../src/view/sort-view';
 import RoutePointView from '../src/view/route-point-view';
 import RouteListView from '../src/view/route-list-view';
 import { generatePoint } from '../src/mock/point';
-import { render, RenderPosition } from './render';
+import { renderElement, RenderPosition } from './render';
 
 const POINT_COUNT = 17;
 
@@ -15,10 +15,10 @@ const menuElement = document.querySelector('.trip-controls__navigation');
 const filtersElement = document.querySelector('.trip-controls__filters');
 const tripEventsElement = document.querySelector('.trip-events');
 
-render(menuElement, new SiteMenuView().element, RenderPosition.BEFOREEND);
-render(filtersElement, new createFiltersTemplate().element, RenderPosition.BEFOREEND);
-render(tripEventsElement, new SortView().element, RenderPosition.BEFOREEND);
-render(tripEventsElement, new RouteListView().element, RenderPosition.BEFOREEND);
+renderElement(menuElement, new SiteMenuView().element, RenderPosition.BEFOREEND);
+renderElement(filtersElement, new createFiltersTemplate().element, RenderPosition.BEFOREEND);
+renderElement(tripEventsElement, new SortView().element, RenderPosition.BEFOREEND);
+renderElement(tripEventsElement, new RouteListView().element, RenderPosition.BEFOREEND);
 
 const tripEventsList = document.querySelector('.trip-events__list');
 
@@ -35,6 +35,6 @@ for (let i = 1; i < POINT_COUNT; i++) {
     tripEventsList.replaceChild(routePointViewElement, editPointViewElement);
   });
 
-  render(tripEventsList, routePointViewElement, RenderPosition.BEFOREEND);
+  renderElement(tripEventsList, routePointViewElement, RenderPosition.BEFOREEND);
 }
 

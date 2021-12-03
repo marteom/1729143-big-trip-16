@@ -1,4 +1,3 @@
-
 export const RenderPosition = {
   BEFOREBEGIN: 'beforebegin',
   AFTERBEGIN: 'afterbegin',
@@ -6,7 +5,7 @@ export const RenderPosition = {
   AFTEREND: 'afterend',
 };
 
-export const render = (container, element, place) => {
+export const renderElement = (container, element, place) => {
   switch (place) {
     case RenderPosition.BEFOREBEGIN:
       container.before(element);
