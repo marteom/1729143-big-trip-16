@@ -1,3 +1,4 @@
+import {createElement} from '../render.js';
 import { getTypeIcon, getHumanizeDate } from '../helpers/utils';
 
 const getOffers = (offers) => {
@@ -12,7 +13,7 @@ const getOffers = (offers) => {
   return offerList;
 };
 
-export const createRoutePointTemplate = (point) => {
+const createRoutePointTemplate = (point) => {
   const { type, city, isFavorite, dateFrom, dateTo, basePrice, offers } = point;
   const isFavoriteActive = isFavorite ? 'event__favorite-btn--active' : '';
   const humanizeDate = getHumanizeDate(dateFrom, dateTo);
@@ -50,3 +51,28 @@ export const createRoutePointTemplate = (point) => {
       </button>
     </div>
   </li>`;};
+
+export default class RoutePointView {
+    #element = null;
+    #point = null;
+
+    constructor(point) {
+      this.#point = point;
+    }
+
+    get element() {
+      if (!this.#element) {
+        this.#element = createElement(this.template);
+      }
+
+      return this.#element;
+    }
+
+    get template() {
+      return createRoutePointTemplate(this.#point);
+    }
+
+    removeElement() {
+      this.#element = null;
+    }
+}
