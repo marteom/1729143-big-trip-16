@@ -5,7 +5,7 @@ import DestinationsView from './destinations-view';
 import { pointTypes } from '../mock/point-types';
 import { pointCities } from '../mock/point-cities';
 import dayjs from 'dayjs';
-import {createElement} from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const createEditPointTemplate = (point) => {
   const { type, city, dateFrom, dateTo, basePrice, destination, offers } = point;
@@ -65,27 +65,35 @@ const createEditPointTemplate = (point) => {
   </form>`;
 };
 
-export default class EditPointView {
-  #element = null;
+export default class EditPointView extends AbstractView {
   #point = null;
 
   constructor(point) {
+    super();
     this.#point = point;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template() {
     return createEditPointTemplate(this.#point);
   }
 
-  removeElement() {
-    this.#element = null;
+  setFormSubmitHandler = (callback) => {
+    this._callback.formSubmit = callback;
+    this.element.addEventListener('submit', this.#formSubmitHandler);
+  }
+
+  #formSubmitHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.formSubmit();
+  }
+
+  setHideClickHandler = (callback) => {
+    this._callback.hideClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#hideClickHandler);
+  }
+
+  #hideClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.hideClick();
   }
 }

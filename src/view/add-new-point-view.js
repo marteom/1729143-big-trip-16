@@ -5,7 +5,7 @@ import DestinationsView from './destinations-view';
 import { pointTypes } from '../mock/point-types';
 import { pointCities } from '../mock/point-cities';
 import dayjs from 'dayjs';
-import { createElement } from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const createAddNewPointTemplate = (point = {}) => {
   const {
@@ -70,27 +70,15 @@ const createAddNewPointTemplate = (point = {}) => {
   </form>`;
 };
 
-export default class AddNewPointView {
-  #element = null;
+export default class AddNewPointView extends AbstractView {
   #point = null;
 
   constructor(point) {
+    super();
     this.#point = point;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
   }
 
   get template() {
     return createAddNewPointTemplate(this.#point);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }
