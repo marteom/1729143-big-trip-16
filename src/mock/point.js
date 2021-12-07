@@ -1,5 +1,9 @@
 
-import { generateValue, getRandomInteger, getFalseOrTrue } from '../helpers/utils.js';
+import {
+  generateValue,
+  getRandomInteger,
+  getFalseOrTrue
+} from '../helpers/utils.js';
 import { generateDestination } from './destinations';
 import { generateOffer } from './offers';
 import { pointTypes } from './point-types';
@@ -15,5 +19,5 @@ export const generatePoint = () => ({
   dateTo: dayjs().format(`YYYY-MM-DDT${getRandomInteger(13, 23)}:${getRandomInteger(10, 59)}:ss.SSS[Z]`),
   basePrice: getRandomInteger(5, 1100),
   destination: generateDestination(),
-  offers: Array(getRandomInteger(1,3)).fill().map(generateOffer),
+  offers: Array(getRandomInteger(1, 3)).fill().map(generateOffer),
 });

@@ -1,4 +1,7 @@
-import { generateValue, getRandomInteger } from '../helpers/utils.js';
+import {
+  generateValue,
+  getRandomInteger
+} from '../helpers/utils.js';
 
 const description = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -29,7 +32,7 @@ const name = [
 ];
 
 export const generateDestination = () => ({
-  description: Array(getRandomInteger(1,5)).fill().map(() => generateValue(description)),
+  description: Array(getRandomInteger(1, 5)).fill().map(() => generateValue(description)),
   name: generateValue(name),
   pictures: [
     {

@@ -1,12 +1,16 @@
 import SiteMenuView from '../src/view/site-menu-view';
-import createFiltersTemplate from '../src/view/filters-view';
+import FiltersView from '../src/view/filters-view';
 import EditPointView from '../src/view/edit-point-view';
 import SortView from '../src/view/sort-view';
 import NoPointView from '../src/view/no-point-view';
 import RoutePointView from '../src/view/route-point-view';
 import RouteListView from '../src/view/route-list-view';
 import { generatePoint } from '../src/mock/point';
-import { renderElement, RenderPosition, replaceElement } from './helpers/render';
+import {
+  renderElement,
+  RenderPosition,
+  replaceElement
+} from './helpers/render';
 
 const POINT_COUNT = 17;
 
@@ -17,7 +21,7 @@ const filtersElement = document.querySelector('.trip-controls__filters');
 const tripEventsElement = document.querySelector('.trip-events');
 
 renderElement(menuElement, new SiteMenuView(), RenderPosition.BEFOREEND);
-renderElement(filtersElement, new createFiltersTemplate(), RenderPosition.BEFOREEND);
+renderElement(filtersElement, new FiltersView(), RenderPosition.BEFOREEND);
 
 if (points.length === 0) {
   renderElement(tripEventsElement, new NoPointView(), RenderPosition.BEFOREEND);
