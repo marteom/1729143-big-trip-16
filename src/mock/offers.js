@@ -1,4 +1,7 @@
-import { generateValue, getRandomInteger } from '../helpers/utils.js';
+import {
+  generateValue,
+  getRandomInteger
+} from '../helpers/utils.js';
 
 const pointOffers = [
   'Rent a car',
@@ -7,7 +10,7 @@ const pointOffers = [
 ];
 
 export const generateOffer = () => ({
-  id: getRandomInteger(1,100),
+  id: getRandomInteger(1, 100),
   title: generateValue(pointOffers),
   price: getRandomInteger(1, 50),
 });

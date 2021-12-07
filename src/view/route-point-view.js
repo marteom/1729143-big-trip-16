@@ -1,15 +1,20 @@
-import {createElement} from '../render.js';
-import { getTypeIcon, getHumanizeDate } from '../helpers/utils';
+import {
+  getTypeIcon,
+  getHumanizeDate
+} from '../helpers/utils';
+import AbstractView from './abstract-view.js';
 
 const getOffers = (offers) => {
   let offerList = '';
-  offers.forEach((offer) => {offerList += `
+  offers.forEach((offer) => {
+    offerList += `
   <li class="event__offer">
   <span class="event__offer-title">${offer.title}</span>
   &plus;&euro;&nbsp;
   <span class="event__offer-price">${offer.price}</span>
 </li>  
-    `;});
+    `;
+  });
   return offerList;
 };
 
@@ -50,29 +55,28 @@ const createRoutePointTemplate = (point) => {
         <span class="visually-hidden">Open event</span>
       </button>
     </div>
-  </li>`;};
+  </li>`;
+};
 
-export default class RoutePointView {
-    #element = null;
-    #point = null;
+export default class RoutePointView extends AbstractView {
+  #point = null;
 
-    constructor(point) {
-      this.#point = point;
-    }
+  constructor(point) {
+    super();
+    this.#point = point;
+  }
 
-    get element() {
-      if (!this.#element) {
-        this.#element = createElement(this.template);
-      }
+  get template() {
+    return createRoutePointTemplate(this.#point);
+  }
 
-      return this.#element;
-    }
+  setEditClickHandler = (callback) => {
+    this._callback.editClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHandler);
+  }
 
-    get template() {
-      return createRoutePointTemplate(this.#point);
-    }
-
-    removeElement() {
-      this.#element = null;
-    }
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.editClick();
+  }
 }
