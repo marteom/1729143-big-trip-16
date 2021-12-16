@@ -11,7 +11,7 @@ import { pointCities } from './point-cities';
 import dayjs from 'dayjs';
 
 export const generatePoint = () => ({
-  id: getRandomInteger(1, 100),
+  id: getRandomInteger(1, 1000),
   type: generateValue(pointTypes),
   city: generateValue(pointCities),
   isFavorite: getFalseOrTrue(),
