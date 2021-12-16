@@ -4,8 +4,8 @@ import RoutePointView from '../view/route-point-view';
 import {
   renderElement,
   RenderPosition,
-  replaceElement,
   removeElement,
+  replaceElement,
 } from '../helpers/render';
 
 const Mode = {

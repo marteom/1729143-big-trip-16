@@ -1,6 +1,17 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
+const sortAsNumber = (numA, numB) => {
+  if (numB > numA) {
+    return 1;
+  }
+  if (numB < numA) {
+    return -1;
+  }
+
+  return 0;
+};
+
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -57,3 +68,19 @@ export const updateArrayItem = (items, updatedItem) => {
     ...items.slice(index + 1),
   ];
 };
+
+export const sortByDuration = (pointA, pointB) => {
+  dayjs.extend(duration);
+  const fromA = dayjs(pointA.dateFrom);
+  const toA = dayjs(pointA.dateTo);
+
+  const fromB = dayjs(pointB.dateFrom);
+  const toB = dayjs(pointB.dateTo);
+
+  const durationA = dayjs.duration(toA.diff(fromA)).asMilliseconds();
+  const durationB = dayjs.duration(toB.diff(fromB)).asMilliseconds();
+
+  return sortAsNumber(durationA, durationB);
+};
+
+export const sortByPrice = (pointA, pointB) => sortAsNumber(pointA.basePrice, pointB.basePrice);
