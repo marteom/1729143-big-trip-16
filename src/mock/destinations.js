@@ -3,6 +3,8 @@ import {
   getRandomInteger
 } from '../helpers/utils.js';
 
+import { pointCities } from './point-cities';
+
 const description = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
@@ -31,13 +33,22 @@ const name = [
   'name-4',
 ];
 
-export const generateDestination = () => ({
-  description: Array(getRandomInteger(1, 5)).fill().map(() => generateValue(description)),
-  name: generateValue(name),
-  pictures: [
-    {
-      src: `http://picsum.photos/248/152?r=${getRandomInteger(1, 999)}`,
-      description: generateValue(imageDescription),
-    }
-  ]
-});
+const generateDestination = (city) => {
+  const descriptionObj = new Object();
+  pointCities.forEach((el) => {
+    descriptionObj[el] = Array(getRandomInteger(1, 5)).fill().map(() => generateValue(description));
+  });
+
+  return {
+    description: descriptionObj[city],
+    name: generateValue(name),
+    pictures: [
+      {
+        src: `http://picsum.photos/248/152?r=${getRandomInteger(1, 999)}`,
+        description: generateValue(imageDescription),
+      }
+    ]
+  };
+};
+
+export const getDestination = (city) => generateDestination(city);
