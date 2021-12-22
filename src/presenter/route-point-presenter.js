@@ -62,6 +62,7 @@ export default class RoutePointPresenter {
     }
 
     #handleHideClick = () => {
+      this.#routePointEditComponent.reset(this.#routePoint);
       this.#replaceFormToPoint();
     }
 
@@ -81,6 +82,7 @@ export default class RoutePointPresenter {
     #onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
+        this.#routePointEditComponent.reset(this.#routePoint);
         this.#replaceFormToPoint();
         this.#routePointEditComponent.element.removeEventListener('keydown', this.#onEscKeyDown);
       }
@@ -104,6 +106,7 @@ export default class RoutePointPresenter {
 
     resetView = () => {
       if (this.#mode !== Mode.DEFAULT) {
+        this.#routePointEditComponent.reset(this.#routePoint);
         this.#replaceFormToPoint();
       }
     }
