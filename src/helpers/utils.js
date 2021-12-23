@@ -46,7 +46,7 @@ export const getHumanizeDate = (dateFrom, dateTo) => ({
     if(Number(durationFromTo.hours()) < 1){
       return durationFromTo.format('mm[m]');
     }
-    else if(Number(durationFromTo.hours()) > 1 && Number(durationFromTo.hours()) < 24){
+    else if(Number(durationFromTo.hours()) > 1 && Number(durationFromTo.days()) <= 1){
       return durationFromTo.format('HH[h] mm[m]');
     }
     else{
