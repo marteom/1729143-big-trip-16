@@ -8,6 +8,8 @@ import dayjs from 'dayjs';
 import { getOffers } from '../mock/offers';
 import { getDestination } from '../mock/destinations';
 import SmartView from './smart-view.js';
+import flatpickr from 'flatpickr';
+import '../../node_modules/flatpickr/dist/flatpickr.min.css';
 
 const createEditPointTemplate = (data) => {
   const { type, city, dateFrom, dateTo, basePrice, destination, offers } = data;
@@ -68,11 +70,28 @@ const createEditPointTemplate = (data) => {
 };
 
 export default class EditPointView extends SmartView {
+  #datepickerFrom = null;
+  #datepickerTo = null;
+
   constructor(point) {
     super();
     this._data = EditPointView.parsePointToData(point);
 
     this.#setInnerHandlers();
+  }
+
+  removeElement = () => {
+    super.removeElement();
+
+    if (this.#datepickerFrom) {
+      this.#datepickerFrom.destroy();
+      this.#datepickerFrom = null;
+    }
+
+    if (this.#datepickerTo) {
+      this.#datepickerTo.destroy();
+      this.#datepickerTo = null;
+    }
   }
 
   get template() {
@@ -111,6 +130,26 @@ export default class EditPointView extends SmartView {
     this.element.querySelector('.event__input--price').addEventListener('change', this.#basePriceChangeHandler);
     this.element.querySelector('#event-start-time-1').addEventListener('change', this.#dateFromChangeHandler);
     this.element.querySelector('#event-end-time-1').addEventListener('change', this.#dateToChangeHandler);
+
+    this.#datepickerFrom = flatpickr(
+      this.element.querySelector('#event-start-time-1'),
+      {
+        'dateFormat': 'd/m/Y H:i',
+        'enableTime': true,
+        'defaultDate': this._data.dateFrom,
+        'time_24hr': true,
+      },
+    );
+
+    this.#datepickerTo = flatpickr(
+      this.element.querySelector('#event-end-time-1'),
+      {
+        'dateFormat': 'd/m/Y H:i',
+        'enableTime': true,
+        'defaultDate': this._data.dateTo,
+        'time_24hr': true,
+      },
+    );
   }
 
   #dateFromChangeHandler = (evt) => {
